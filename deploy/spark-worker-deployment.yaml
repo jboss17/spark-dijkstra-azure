@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spark-worker
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: spark
+      role: worker
+  template:
+    metadata:
+      labels:
+        app: spark
+        role: worker
+    spec:
+      containers:
+        - name: spark-worker
+          image: bitnami/spark:latest
+          ports:
+            - containerPort: 8081
+          command:
+            - /opt/bitnami/spark/bin/spark-class
+            - org.apache.spark.deploy.worker.Worker
+            - spark://spark-master-service:7077
+
