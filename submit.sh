@@ -1,30 +1,31 @@
 #!/bin/bash
 
-SPARK_MASTER_SERVICE="spark-master-service"
-TARGET_JAR_PATTERN="spark-dijkstra-azure"
-
-# Get Spark Master External IP
-SPARK_MASTER_IP=$(kubectl get svc $SPARK_MASTER_SERVICE -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
-
-if [ -z "$SPARK_MASTER_IP" ]; then
-  echo "❌ Failed to get Spark Master external IP!"
-  exit 1
-fi
-
-echo "✅ Using Spark Master IP: $SPARK_MASTER_IP"
-
-# Auto-find JAR inside the Pod
-JAR_FILE=$(kubectl exec spark-master-556cff68fd-hzz6r -- sh -c "cd /opt/bitnami/spark && ls *.jar | grep '$TARGET_JAR_PATTERN' | head -n 1")
-
-if [ -z "$JAR_FILE" ]; then
-  echo "❌ Could not find any JAR matching '$TARGET_JAR_PATTERN'"
-  exit 1
-fi
+#SPARK_MASTER_SERVICE="spark-master-service"
+#TARGET_JAR_PATTERN="spark-dijkstra-azure"
+#
+## Get Spark Master External IP
+#SPARK_MASTER_IP=$(kubectl get svc $SPARK_MASTER_SERVICE -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+#
+#if [ -z "$SPARK_MASTER_IP" ]; then
+#  echo "❌ Failed to get Spark Master external IP!"
+#  exit 1
+#fi
+#
+#echo "✅ Using Spark Master IP: $SPARK_MASTER_IP"
+#
+## Auto-find JAR inside the Pod
+#JAR_FILE=$(kubectl exec spark-master-556cff68fd-hzz6r -- sh -c "cd /opt/bitnami/spark && ls *.jar | grep '$TARGET_JAR_PATTERN' | head -n 1")
+#
+#if [ -z "$JAR_FILE" ]; then
+#  echo "❌ Could not find any JAR matching '$TARGET_JAR_PATTERN'"
+#  exit 1
+#fi
 
 # JAR_PATH="/opt/bitnami/spark/${JAR_FILE}"
-JAR_PATH="target/scala-2.12/spark-dijkstra-azure-assembly-0.1.0-SNAPSHOT.jar"
+#JAR_PATH="target/scala-2.12/spark-dijkstra-azure-assembly-0.1.0-SNAPSHOT.jar"
+JAR_PATH=https://github.com/jboss17/spark-dijkstra-azure/releases/download/v1.0.0/spark-dijkstra-azure_2.12-0.1.0-SNAPSHOT.jar
 
-echo "✅ Using JAR: $JAR_PATH"
+#echo "✅ Using JAR: $JAR_PATH"
 
 # Define Main Class
 MAIN_CLASS=com.jboss17.sparkdijkstra.Main
@@ -38,8 +39,7 @@ spark-submit \
   --name spark-dijkstra-job \
   --class $MAIN_CLASS \
   --conf spark.executor.instances=2 \
-  --conf spark.kubernetes.container.image=bitnami/spark:3.4.1 \
-  --conf spark.kubernetes.authenticate.driver.serviceAccountName=spark \
+  --conf spark.kubernetes.container.image=bitnami/spark:3.4.1-debian-11-r0 \
   $JAR_PATH
 
   # Standalone Mode spark://$SPARK_MASTER_IP:7077
@@ -49,3 +49,5 @@ spark-submit \
 
   # Spark defaults to 1 executor -->   --conf spark.executor.instances=2 \
   #   - specify for true parallelism
+
+#    --conf spark.kubernetes.authenticate.driver.serviceAccountName=spark \
