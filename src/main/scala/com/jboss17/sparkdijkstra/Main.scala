@@ -13,10 +13,6 @@ object Main {
 
       sc.setLogLevel("WARN")
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 878d0ec (removed secret)
       val inputPath = "data/weighted_graph.txt"
       val outputPath = "file:///home/jboss17/spark-dijkstra-azure/output/dijkstra-results"
 
