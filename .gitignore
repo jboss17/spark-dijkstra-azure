@@ -3,8 +3,8 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-spark-docker-build/
-deploy/
+/spark-docker-build/
+/deploy/
 
 
 ### IntelliJ IDEA ###
