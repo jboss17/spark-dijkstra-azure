@@ -4,6 +4,7 @@ target/
 !**/src/test/**/target/
 
 spark-docker-build/
+replacements.txt
 
 
 ### IntelliJ IDEA ###
