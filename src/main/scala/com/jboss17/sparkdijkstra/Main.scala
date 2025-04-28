@@ -7,15 +7,18 @@ object Main {
 
   def main(args: Array[String]): Unit = {
 
-    try {
       val conf = new SparkConf().setAppName("spark-dijkstra-azure")
-      //      .setMaster("local[*]")
+
       val sc = new SparkContext(conf)
+
       sc.setLogLevel("WARN")
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> 878d0ec (removed secret)
       val inputPath = "data/weighted_graph.txt"
-      //    val inputPath = "data/test_graph.txt"
-      val outputPath = "/output/dijkstra-results"
+      val outputPath = "file:///home/jboss17/spark-dijkstra-azure/output/dijkstra-results"
 
       System.out.println(">>>>>>>>>> Reading Data")
 
@@ -50,15 +53,9 @@ object Main {
 
       output.coalesce(1).saveAsTextFile(outputPath)
 
-      Thread.sleep(300000)
+      System.out.println(">>>>>>>>>> Copy Output Over!")
 
       sc.stop()
-
-    } catch {
-      case e: Throwable =>
-        println(s"ERROR CAUGHT: ${e.getMessage}")
-        e.printStackTrace()
-    }
 
   }
 

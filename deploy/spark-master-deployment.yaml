@@ -16,7 +16,13 @@ spec:
     spec:
       containers:
         - name: spark-master
-          image: bitnami/spark:latest
+          image: jboss17/spark-azure:latest
+          env:
+            - name: SPARK_MODE
+              value: master
+            - name: SPARK_SUBMIT_OPTIONS
+              value: >
+                --conf spark.jars=/opt/bitnami/spark/jars/hadoop-azure-3.3.2.jar,/opt/bitnami/spark/jars/azure-storage-8.6.6.jar
           ports:
             - containerPort: 7077
             - containerPort: 8080
