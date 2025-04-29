@@ -20,6 +20,11 @@ if ! grep -q "export SPARK_HOME=~/spark" ~/.bashrc; then
     echo 'export PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin' >> ~/.bashrc
 fi
 
+# Also export it in this script context so we can use it immediately
+export SPARK_HOME=~/spark
+export PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin
+
+
 # Load new environment variables
 source ~/.bashrc
 
