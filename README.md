@@ -36,13 +36,19 @@ Spark History Server UI -- http://<your-public-vm-ip>:18080
 
 ## ⚡ Quick Start
 
-### 1. Clone the repository
+### 1. Connect to your VM
+
+```bash
+    ssh -i ~/.ssh/your-vm-private-key.pem <username>@<public-IP-of-vm>
+```
+
+### 2. Clone the repository
 
 ```bash
     git clone https://github.com/jboss17/spark-dijkstra-azure.git
     cd spark-dijkstra-azure/scripts
 ```
-### 2. Install Spark
+### 3. Install Spark
 
 ```bash
     ./setup_spark.sh [username]
@@ -54,7 +60,7 @@ Example:
     ./setup_spark.sh azureuser
 ```
 
-### 3. Start Cluster
+### 4. Start Cluster
 
 ```bash
     ./start-master-simple.sh
@@ -62,13 +68,13 @@ Example:
     ./start-history-server.sh
 ```
 
-### 4. Submit Spark Job
+### 5. Submit Spark Job
 
 ```bash
     ./submit [starting_node]
 ```
 
-### 5. Stop Cluster
+### 6. Stop Cluster
 
 ```bash
     ./stop-all.sh

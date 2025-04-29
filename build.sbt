@@ -9,7 +9,7 @@ lazy val root = (project in file("."))
       "org.apache.spark" %% "spark-core" % "3.4.1",
       "org.apache.spark" %% "spark-graphx" % "3.4.1"
     ),
-    assemblyMergeStrategy in assembly := {
+    assembly / assemblyMergeStrategy := {
       case PathList("META-INF", xs @ _*) => MergeStrategy.discard
       case _ => MergeStrategy.first
     }
