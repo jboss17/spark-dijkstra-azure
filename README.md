@@ -51,7 +51,7 @@ Spark History Server UI -- http://<your-public-vm-ip>:18080
 ### 3. Setup Environment
 
 ```bash
-    ./install_spark.sh
+    ./setup_env.sh
     ./configure_spark.sh [azureuser]
 ```
 
