@@ -63,21 +63,21 @@ Spark History Server UI -- http://<your-public-vm-ip>:18080
 ### 5. Start Cluster
 
 ```bash
-    ./start-master.sh
-    ./start-worker.sh
-    ./start-history-server.sh
+    scripts/start-master.sh
+    scripts/start-worker.sh
+    scripts/start-history-server.sh
 ```
 
 ### 6. Submit Spark Job
 
 ```bash
-    ./submit [starting_node]
+    scripts/submit.sh [starting_node]
 ```
 
 ### 7. Stop Cluster
 
 ```bash
-    ./stop-all.sh
+    scripts/stop-all.sh
 ```
 
 
