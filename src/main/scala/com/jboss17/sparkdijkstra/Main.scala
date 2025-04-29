@@ -1,58 +1,65 @@
 package com.jboss17.sparkdijkstra
 
-import org.apache.spark._
-import org.apache.spark.graphx._
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import org.apache.spark.{SparkConf, SparkContext}
+import org.apache.spark.graphx.{Edge, Graph}
 
 object Main {
 
   def main(args: Array[String]): Unit = {
 
-      val conf = new SparkConf().setAppName("spark-dijkstra-azure")
+    if (args.length < 1) {
+      System.err.println("Usage: Main <starting-node-id>")
+      System.exit(1)
+    }
 
-      val sc = new SparkContext(conf)
+    val startingNodeId = args(0).toLong
 
-      sc.setLogLevel("WARN")
+    val conf = new SparkConf().setAppName("spark-dijkstra-azure")
+    val sc = new SparkContext(conf)
+    sc.setLogLevel("WARN")
 
-      val inputPath = "data/weighted_graph.txt"
-      val outputPath = "file:///home/jboss17/spark-dijkstra-azure/output/dijkstra-results"
+    val inputPath = "data/weighted_graph.txt"
 
-      System.out.println(">>>>>>>>>> Reading Data")
+    // === Dynamically create outputPath with timestamp ===
+    val now = LocalDateTime.now()
+    val formatter = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss")
+    val timestamp = now.format(formatter)
+    val outputPath = s"file:///home/jboss17/spark-dijkstra-azure/output/dijkstra-results-$timestamp"
 
-      val raw = sc.textFile(inputPath)
+    System.out.println(">>>>>>>>>> Reading Data")
+    val raw = sc.textFile(inputPath)
 
-      System.out.println(">>>>>>>>>> Data Read")
+    System.out.println(">>>>>>>>>> Data Read")
+    val data = raw.zipWithIndex().filter { case (_, idx) => idx != 0 }.map(_._1)
 
-      val data = raw.zipWithIndex().filter { case (_, idx) => idx != 0 }.map(_._1)
+    System.out.println(">>>>>>>>>> Initializing Graph")
+    val edges = data.flatMap { line =>
+      val Array(u, v, w) = line.split("\\s+").map(_.toLong)
+      Seq(
+        Edge(u, v, w.toDouble),
+        Edge(v, u, w.toDouble)
+      )
+    }
 
-      System.out.println(">>>>>>>>>> Initializing Graph")
+    val vertices = edges.flatMap(e => Seq(e.srcId, e.dstId)).distinct().map(id => (id, s"Node $id"))
+    val graph = Graph(vertices, edges)
 
-      val edges = data.flatMap { line =>
-        val Array(u, v, w) = line.split("\\s+").map(_.toLong)
-        Seq(
-          Edge(u, v, w.toDouble),
-          Edge(v, u, w.toDouble)
-        )
-      }
+    System.out.println(">>>>>>>>>> Graph Initialized!!")
 
-      val vertices = edges.flatMap(e => Seq(e.srcId, e.dstId)).distinct().map(id => (id, s"Node $id"))
+    System.out.println(s">>>>>>>>>> Running Dijkstra's from node $startingNodeId")
+    val dijkstra = new Dijkstras(graph)
 
-      val graph = Graph(vertices, edges)
+    val output = dijkstra.shortestPath(startingNodeId)
 
-      System.out.println(">>>>>>>>>> Graph Initialized!!")
+    System.out.println(">>>>>>>>>> Dijkstra's Run Successfully!")
 
-      System.out.println(">>>>>>>>>> Running Dijkstras")
-      val dijkstra = new Dijkstras(graph)
+    output.coalesce(1).saveAsTextFile(outputPath)
 
-      val output = dijkstra.shortestPath(0L)
+    System.out.println(s">>>>>>>>>> Output written to $outputPath")
 
-      System.out.println(">>>>>>>>>> Dijkstra's Run Successfully!")
-
-      output.coalesce(1).saveAsTextFile(outputPath)
-
-      System.out.println(">>>>>>>>>> Copy Output Over!")
-
-      sc.stop()
-
+    sc.stop()
   }
-
 }
+
