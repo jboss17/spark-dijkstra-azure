@@ -3,9 +3,6 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-/spark-docker-build/
-/deploy/
-
 
 ### IntelliJ IDEA ###
 .idea/modules.xml

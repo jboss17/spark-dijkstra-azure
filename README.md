@@ -9,14 +9,14 @@ The Dijkstra's algorithm runs on a distributed graph stored in a text file, and 
 
 ## 📦 Contents
 
-| Script                    | Purpose                                                                                        |
-|:--------------------------|:-----------------------------------------------------------------------------------------------|
-| `setup_spark.sh`          | Install Java, Spark, configure environment variables, create `spark-defaults.conf` dynamically |
-| `start-master.sh`         | Start Spark Master node                                                                        |
-| `start-worker.sh`         | Start one or more Spark Worker nodes                                                           |
-| `start-history-server.sh` | Start Spark History Server (for viewing past application logs)                                 |
-| `submit.sh`               | Submit application JAR                                                                         |
-| `stop-all.sh`             | Stop all running Spark services                                                                |
+| Script                                   | Purpose                                                                                        |
+|:-----------------------------------------|:-----------------------------------------------------------------------------------------------|
+| `install_spark.sh`, `configure_spark.sh` | Install Java, Spark, configure environment variables, create `spark-defaults.conf` dynamically |
+| `start-master.sh`                        | Start Spark Master node                                                                        |
+| `start-worker.sh`                        | Start one or more Spark Worker nodes                                                           |
+| `start-history-server.sh`                | Start Spark History Server (for viewing past application logs)                                 |
+| `submit.sh`                              | Submit application JAR                                                                         |
+| `stop-all.sh`                            | Stop all running Spark services                                                                |
 
 All scripts are located inside the `scripts/` folder.
 
@@ -36,45 +36,40 @@ Spark History Server UI -- http://<your-public-vm-ip>:18080
 
 ## ⚡ Quick Start
 
-### 1. Connect to your VM
+### 1. Connect to VM
 
 ```bash
     ssh -i ~/.ssh/your-vm-private-key.pem <username>@<public-IP-of-vm>
 ```
 
-### 2. Clone the repository
+### 2. Clone Repo
 
 ```bash
     git clone https://github.com/jboss17/spark-dijkstra-azure.git
     cd spark-dijkstra-azure/scripts
 ```
-### 3. Install Spark
+### 3. Setup Environment
 
 ```bash
-    ./setup_spark.sh [username]
-```
-
-Example:
-
-```bash
-    ./setup_spark.sh azureuser
+    ./install_spark.sh
+    ./configure_spark.sh [azureuser]
 ```
 
 ### 4. Start Cluster
 
 ```bash
-    ./start-master-simple.sh
-    ./start-worker-simple.sh [number_of_workers]   # default is 1
+    ./start-master.sh
+    ./start-worker.sh
     ./start-history-server.sh
 ```
 
-### 5. Submit Spark Job
+### 6. Submit Spark Job
 
 ```bash
     ./submit [starting_node]
 ```
 
-### 6. Stop Cluster
+### 7. Stop Cluster
 
 ```bash
     ./stop-all.sh

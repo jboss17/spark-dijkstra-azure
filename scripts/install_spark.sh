@@ -13,6 +13,9 @@ echo "🛠 Extracting Spark..."
 tar xvf spark-3.4.1-bin-hadoop3.tgz
 mv spark-3.4.1-bin-hadoop3 ~/spark
 
+echo "🧹 Cleaning up downloaded archive..."
+rm spark-3.4.1-bin-hadoop3.tgz
+
 # === Part 3: Set Environment Variables ===
 echo "🔧 Setting SPARK_HOME and PATH..."
 if ! grep -q "export SPARK_HOME=~/spark" ~/.bashrc; then
