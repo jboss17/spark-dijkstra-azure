@@ -7,7 +7,7 @@ sudo apt install -y openjdk-11-jdk wget tar curl
 
 # === Part 2: Download and Install Spark ===
 echo "⬇️ Downloading Spark 3.4.1..."
-wget https://dlcdn.apache.org/spark/spark-3.4.1/spark-3.4.1-bin-hadoop3.tgz
+wget https://archive.apache.org/dist/spark/spark-3.4.1/spark-3.4.1-bin-hadoop3.tgz
 
 echo "🛠 Extracting Spark..."
 tar xvf spark-3.4.1-bin-hadoop3.tgz
