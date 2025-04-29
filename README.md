@@ -20,9 +20,11 @@ The Dijkstra's algorithm runs on a distributed graph stored in a text file, and 
 
 All scripts are located inside the `scripts/` folder.
 
-May need to run `chmod +x scripts/*.sh` to make scripts executable.
+- Ensure they are executable: `chmod +x scripts/*.sh`
 
 Ensure inbound port rules have been set in your VM for port 8080 (Spark Master UI) and 18080 (Spark History Server UI).
+
+Output is written to `spark-dijkstra-azure/output/dijkstra-results-$timestamp_of_submitted_job`
 
 ---
 
