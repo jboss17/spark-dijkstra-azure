@@ -23,11 +23,6 @@ if ! grep -q "export SPARK_HOME=~/spark" ~/.bashrc; then
     echo "export PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin" >> ~/.bashrc
 fi
 
-# Load new environment variables for this session
-#export SPARK_HOME=~/spark
-#export PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin
-#source ~/.bashrc
-
 # === Part 4: Install SBT ===
 echo "📦 Installing SBT (Scala Build Tool)..."
 
