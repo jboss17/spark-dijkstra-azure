@@ -4,6 +4,7 @@ This repository contains scripts for **Implementing Dijkstra's Algorithm with Ap
 
 It includes installation, configuration, starting, and stopping of Spark components (Master, Workers, and History Server) in a standalone cluster setup.  
 The Dijkstra's algorithm runs on a distributed graph stored in a text file, and computes shortest paths efficiently using Apache Spark and GraphX.
+
 ---
 
 ## 📦 Contents
@@ -24,13 +25,13 @@ May need to run `chmod +x scripts/*.sh` to make scripts executable.
 Ensure inbound port rules have been set in your VM for port 8080 (Spark Master UI) and 18080 (Spark History Server UI).
 
 ---
+
 ## 🌐 Web UIs
 
-Spark Master UI:
-http://<your-public-vm-ip>:8080
+Spark Master UI -- http://<your-public-vm-ip>:8080
 
-Spark History Server UI:
-http://<your-public-vm-ip>:18080
+Spark History Server UI -- http://<your-public-vm-ip>:18080
+
 ---
 
 ## ⚡ Quick Start
