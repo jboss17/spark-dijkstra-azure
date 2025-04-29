@@ -10,8 +10,8 @@ echo "⬇️ Downloading Spark 3.4.1..."
 wget https://dlcdn.apache.org/spark/spark-3.4.1/spark-3.4.1-bin-hadoop3.tgz
 
 echo "🛠 Extracting Spark..."
-tar xvf spark-3.5.0-bin-hadoop3.tgz
-mv spark-3.5.0-bin-hadoop3 spark
+tar xvf spark-3.4.1-bin-hadoop3.tgz
+mv spark-3.4.1-bin-hadoop3 spark
 
 # === Part 3: Set Environment Variables ===
 echo "🔧 Setting SPARK_HOME and PATH..."
